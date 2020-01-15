@@ -6,11 +6,14 @@ public class Tile : MonoBehaviour
     public enum Type {Maximum, Half, Quarter, Minimal };
     Type type;
     [SerializeField] Material[] materials;
+    public Vector2 point;
 
     public float value;
 
-    public void SetUpType()
+    public void SetUpType(int x, int y)
     {
+        point.x = x;
+        point.y = y;
         value = MINIMAL_VALUE;
         gameObject.GetComponent<Renderer>().material = materials[3];
     }

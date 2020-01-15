@@ -4,11 +4,22 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
-    const int MAP_SIZE = 16;
+    public static MapGenerator instance = null;
+
+    public const int MAP_SIZE = 16;
     [SerializeField] GameObject tile;
     [SerializeField] GameObject coverTile;
     public GameObject[,] tileMap = new GameObject[MAP_SIZE, MAP_SIZE];
     public GameObject[,] coverTileMap = new GameObject[MAP_SIZE, MAP_SIZE];
+
+
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else if (instance != null)
+            Destroy(gameObject);
+    }
 
     private void Start()
     {
@@ -21,12 +32,13 @@ public class MapGenerator : MonoBehaviour
                 for(int j = 0; j < MAP_SIZE; j++)
                 {
                     GameObject newTile = Instantiate(tile, transform);
-                    newTile.GetComponent<Tile>().SetUpType();
+                    newTile.GetComponent<Tile>().SetUpType(j, i);
                     newTile.transform.position = new Vector3(j * tileSize, 0, i * tileSize);
                     tileMap[j, i] = newTile;
 
                     GameObject newCoverTile = Instantiate(coverTile, transform);
                     newCoverTile.transform.position = new Vector3(j * tileSize, tileSize / 2, i * tileSize);
+                    newCoverTile.GetComponent<CoverTile>().point = new Vector2(j, i);
                     coverTileMap[j, i] = newCoverTile;
                 }
             }
