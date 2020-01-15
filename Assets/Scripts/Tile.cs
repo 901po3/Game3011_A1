@@ -2,21 +2,17 @@
 
 public class Tile : MonoBehaviour
 {
-    const float MINIMAL_VALUE = 200;
+    public const float MINIMAL_VALUE = 100;
     public enum Type {Maximum, Half, Quarter, Minimal };
-    Type type = Type.Minimal;
+    Type type;
     [SerializeField] Material[] materials;
 
     public float value;
 
-    private void Start()
+    public void SetUpType()
     {
-        SetValueByType(MINIMAL_VALUE);
-    }
-
-    public void TypeChanger(Type newtype)
-    {
-        type = newtype;
+        value = MINIMAL_VALUE;
+        gameObject.GetComponent<Renderer>().material = materials[3];
     }
 
     public void SetValueByType(float newValue)
@@ -24,23 +20,41 @@ public class Tile : MonoBehaviour
         switch(type)
         {
             case Type.Maximum:
-                value = newValue;
-                gameObject.GetComponent<Renderer>().material = materials[0];
+                if(value < newValue)
+                {
+                    value = newValue;
+                    gameObject.GetComponent<Renderer>().material = materials[0];
+                }
                 break;
             case Type.Half:
-                value = newValue / 2;
-                gameObject.GetComponent<Renderer>().material = materials[1];
+                if (value < newValue / 2)
+                {
+                    value = (int)newValue / 2;
+                    gameObject.GetComponent<Renderer>().material = materials[1];
+                }
                 break;
             case Type.Quarter:
-                value = newValue / 4;
-                gameObject.GetComponent<Renderer>().material = materials[2];
+                if (value < newValue / 4)
+                {
+                    value = (int)newValue / 4;
+                    gameObject.GetComponent<Renderer>().material = materials[2];
+                }
                 break;
             case Type.Minimal:
-                value = MINIMAL_VALUE;
-                gameObject.GetComponent<Renderer>().material = materials[3];
+                if(value < newValue / 10)
+                {
+                    value = (int)newValue / 16;
+                    gameObject.GetComponent<Renderer>().material = materials[3];
+                }
                 break;
             default:
                 break;
         }
+    }
+
+    public void UpdateTypeChange(Type newType, float newValue)
+    {
+        type = newType;
+        SetValueByType(newValue);
     }
 }
