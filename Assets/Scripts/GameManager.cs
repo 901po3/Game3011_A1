@@ -6,13 +6,15 @@ public class GameManager : MonoBehaviour
 {
     float clickDelay = 0.1f;
     float curClickDelay = 0.0f;
+    int clickNum = 6;
 
     private void Update()
     {
-        if(curClickDelay == 0)
+        if(curClickDelay == 0 && clickNum > 0)
         {
             if (Input.GetMouseButtonDown(0))
             {
+                clickNum -= 1;
                 curClickDelay += Time.deltaTime;
                 RaycastHit hit;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

@@ -111,4 +111,5 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 24e7a840f4e59a54aaaeb9cd6b3dd8bf, type: 2}
   - {fileID: 2100000, guid: 3acacd22bea5dee47b032bef6a6d0549, type: 2}
   - {fileID: 2100000, guid: f4574799f4653ae4db4e21ed0e03c353, type: 2}
+  point: {x: 0, y: 0}
   value: 0

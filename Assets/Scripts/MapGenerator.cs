@@ -37,7 +37,7 @@ public class MapGenerator : MonoBehaviour
                     tileMap[j, i] = newTile;
 
                     GameObject newCoverTile = Instantiate(coverTile, transform);
-                    newCoverTile.transform.position = new Vector3(j * tileSize, tileSize / 2, i * tileSize);
+                    newCoverTile.transform.position = new Vector3(j * tileSize, 0.1f, i * tileSize);
                     newCoverTile.GetComponent<CoverTile>().point = new Vector2(j, i);
                     coverTileMap[j, i] = newCoverTile;
                 }
