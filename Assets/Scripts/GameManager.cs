@@ -64,14 +64,14 @@ public class GameManager : MonoBehaviour
                 curClickDelay = 0.0f;
         }
 
-        if(extractClickNum == 0)
+        GetTileInfo();
+
+        if (extractClickNum == 0)
         {
             finalText.gameObject.SetActive(true);
             finalText.text = "Final Resource : " + resource;
             isGameEnd = true;
         }
-
-        GetTileInfo();
     }
 
     void GetTileInfo()
