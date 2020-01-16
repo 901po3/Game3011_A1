@@ -4,13 +4,16 @@ public class Tile : MonoBehaviour
 {
     public const float MINIMAL_VALUE = 100;
     public enum Type {Maximum, Half, Quarter, Minimal };
-    Type type;
-    [SerializeField] Material[] materials;
+    public Type type;
+    public Material[] materials;
+    public Vector2 point;
 
     public float value;
 
-    public void SetUpType()
+    public void SetUpType(int x, int y)
     {
+        point.x = x;
+        point.y = y;
         value = MINIMAL_VALUE;
         gameObject.GetComponent<Renderer>().material = materials[3];
     }
@@ -29,21 +32,21 @@ public class Tile : MonoBehaviour
             case Type.Half:
                 if (value < newValue / 2)
                 {
-                    value = (int)newValue / 2;
+                    value = newValue / 2;
                     gameObject.GetComponent<Renderer>().material = materials[1];
                 }
                 break;
             case Type.Quarter:
                 if (value < newValue / 4)
                 {
-                    value = (int)newValue / 4;
+                    value = newValue / 4;
                     gameObject.GetComponent<Renderer>().material = materials[2];
                 }
                 break;
             case Type.Minimal:
-                if(value < newValue / 10)
+                if(value < newValue / 8)
                 {
-                    value = (int)newValue / 16;
+                    value = newValue / 8;
                     gameObject.GetComponent<Renderer>().material = materials[3];
                 }
                 break;
@@ -56,5 +59,50 @@ public class Tile : MonoBehaviour
     {
         type = newType;
         SetValueByType(newValue);
+    }
+
+    public int CollectAround()
+    {
+        int tempValue = (int)value;
+
+        if (type != Type.Minimal)
+        {
+            type += 1;
+            value /= 2;
+            GetComponent<Renderer>().material = materials[(int)type];
+        }
+
+        return tempValue;
+    }
+
+    public void Collect()
+    {
+        if (type != Type.Minimal)
+        {
+            ChangeValue(type);
+            type = Type.Minimal;
+            GetComponent<Renderer>().material = materials[(int)Type.Minimal];
+        }
+    }
+
+
+
+    public void ChangeValue(Type prevType)
+    {
+        switch(prevType)
+        {
+            case Type.Maximum:
+                value = value / 8;
+                break;
+            case Type.Half:
+                value = value / 4;
+                break;
+            case Type.Quarter:
+                value = value / 2;
+                break;
+            default:
+                break;
+        }
+
     }
 }
