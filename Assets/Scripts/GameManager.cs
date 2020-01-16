@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
                         DetectAllInRange(hit.transform);
                     }
 
-                    if (curMode == Mode.ExtractMode && extractClickNum > 0 && hit.transform.tag == "Tile")
+                    if (curMode == Mode.ExtractMode && extractClickNum > 0 && (hit.transform.tag == "Tile" ))
                     {
                         curClickDelay += Time.deltaTime;
                         extractClickNum -= 1;
@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour
             {
                 if (point.x + j >= 0 && point.x + j < MapGenerator.MAP_SIZE && point.y + i >= 0 && point.y + i < MapGenerator.MAP_SIZE)
                 {
-                    MapGenerator.instance.coverTileMap[point.x + j, point.y + i].SetActive(false);
+                    MapGenerator.instance.coverTileMap[point.x + j, point.y + i].GetComponent<CoverTile>().Clicked();
                 }
             }
         }
@@ -118,7 +118,8 @@ public class GameManager : MonoBehaviour
             {
                 if (point.x + j >= 0 && point.x + j < MapGenerator.MAP_SIZE && point.y + i >= 0 && point.y + i < MapGenerator.MAP_SIZE)
                 {
-                    resource += MapGenerator.instance.tileMap[point.x + j, point.y + i].GetComponent<Tile>().CollectAround();                  
+                    resource += MapGenerator.instance.tileMap[point.x + j, point.y + i].GetComponent<Tile>().CollectAround();
+                    MapGenerator.instance.coverTileMap[point.x + j, point.y + i].GetComponent<CoverTile>().Clicked();
                 }
             }
         }
