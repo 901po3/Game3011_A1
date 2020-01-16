@@ -46,7 +46,7 @@ public class Tile : MonoBehaviour
             case Type.Minimal:
                 if(value < newValue / 8)
                 {
-                    value = newValue / 16;
+                    value = newValue / 8;
                     gameObject.GetComponent<Renderer>().material = materials[3];
                 }
                 break;
@@ -61,15 +61,31 @@ public class Tile : MonoBehaviour
         SetValueByType(newValue);
     }
 
-    public void DecreaseLevel()
+    public int CollectAround()
     {
-        if(type != Type.Minimal)
+        int tempValue = (int)value;
+
+        if (type != Type.Minimal)
         {
             type += 1;
             value /= 2;
             GetComponent<Renderer>().material = materials[(int)type];
         }
+
+        return tempValue;
     }
+
+    public void Collect()
+    {
+        if (type != Type.Minimal)
+        {
+            ChangeValue(type);
+            type = Type.Minimal;
+            GetComponent<Renderer>().material = materials[(int)Type.Minimal];
+        }
+    }
+
+
 
     public void ChangeValue(Type prevType)
     {
