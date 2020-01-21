@@ -111,6 +111,7 @@ public class GameManager : MonoBehaviour
     void ExtactTile(Transform clickedTile)
     {
         Vector2Int point = new Vector2Int((int)clickedTile.GetComponent<Tile>().point.x, (int)clickedTile.GetComponent<Tile>().point.y);
+        resource += clickedTile.GetComponent<Tile>().value;
 
         for (int i = -2; i <= 2; i++)
         {
@@ -118,7 +119,6 @@ public class GameManager : MonoBehaviour
             {
                 if (point.x + j >= 0 && point.x + j < MapGenerator.MAP_SIZE && point.y + i >= 0 && point.y + i < MapGenerator.MAP_SIZE)
                 {
-                    resource += MapGenerator.instance.tileMap[point.x + j, point.y + i].GetComponent<Tile>().CollectAround();
                     MapGenerator.instance.coverTileMap[point.x + j, point.y + i].GetComponent<CoverTile>().Clicked();
                 }
             }
